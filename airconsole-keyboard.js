@@ -376,32 +376,73 @@ AirConsoleKeyboard.prototype.createKey_ = function(key, percent_width) {
   if (key.className) {
     key_label.className += " " + key.className;
   }
-  var event_name = ('ontouchstart' in document.documentElement) ?
-      'touchstart' : 'mousedown';
+  var event_name_down = "touchstart";
+  var event_name_up = "touchend";
+  var event_name_down_prevent = "mousedown";
+  var event_name_up_prevent = "mouseup";
+  if (!('ontouchstart' in document.documentElement)) {
+    event_name_down = "mousedown";
+    event_name_up = "mouseup";
+    event_name_down_prevent = "touchstart";
+    event_name_up_prevent = "touchend";
+  }
   if (key.html !== undefined) {
-    key_container.addEventListener(event_name, function() {
+    key_container.addEventListener(event_name_down, function(e) {
       if (key.container.className.indexOf(
           " airconsole-keyboard-key-disabled") == -1) {
         me.onKey_(key, key_label)
       }
+      e.stopPropagation();
     });
   }
   if (key.action !== undefined) {
-    key_container.addEventListener(event_name, function() {
+    var clear_all_timeout;
+    if (key.action == AirConsoleKeyboard.BACKSPACE) {
+      key_container.addEventListener(event_name_down, function(e) {
+        if (key.container.className.indexOf(
+                " airconsole-keyboard-key-disabled") == -1) {
+          clear_all_timeout = window.setTimeout(function() {
+            me.setValue(me.active_input_id, "")
+          }, 500);
+        }
+      });
+    }
+
+    key_container.addEventListener(event_name_up, function(e) {
       if (key.container.className.indexOf(
           " airconsole-keyboard-key-disabled") == -1) {
-        me.onAction_(key.action, key_label);
+        if (clear_all_timeout) {
+          window.clearTimeout(clear_all_timeout);
+          clear_all_timeout = null;
+        }
+        window.setTimeout(function() {
+          me.onAction_(key.action, key_label);
+        }, key.action == AirConsoleKeyboard.BACKSPACE ? 0 : 100);
       }
+      e.stopPropagation();
     });
   }
   if (key.layout !== undefined) {
-    key_container.addEventListener(event_name, function() {
+    key_container.addEventListener(event_name_down, function(e) {
       if (key.container.className.indexOf(
           " airconsole-keyboard-key-disabled") == -1) {
         me.switchLayout(key.layout)
       }
+      e.stopPropagation();
     });
   }
+  key_container.addEventListener(event_name_down_prevent, function(e) {
+    e.stopPropagation();
+  });
+  key_container.addEventListener(event_name_up_prevent, function(e) {
+    e.stopPropagation();
+  });
+  key_container.addEventListener("click", function(e) {
+    e.stopPropagation();
+  });
+  key_container.addEventListener("dblclick", function(e) {
+    e.stopPropagation();
+  });
   key_container.appendChild(key_label);
   key_container.style.width = percent_width + "%";
   key.container = key_container;
