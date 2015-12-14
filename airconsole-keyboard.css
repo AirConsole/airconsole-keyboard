@@ -1,0 +1,91 @@
+.airconsole-keyboard {
+    background-color: black;
+    color: white;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    font-family: sans-serif;
+}
+
+.airconsole-keyboard-layout {
+    max-width: 640px;
+}
+
+.airconsole-keyboard-key-label {
+    border: 1px solid #3b3b3b;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.airconsole-keyboard-key-label-active {
+    background-color: #5577ff;
+}
+
+.airconsole-keyboard-layout-key-active {
+    background-color: #5577ff;
+}
+
+.airconsole-keyboard-carret {
+    background-color: #777777;
+    width: 1px
+}
+
+.airconsole-keyboard-key-disabled {
+    color: #3b3b3b;
+}
+
+/* You probably shouldn't change anything bellow */
+
+.airconsole-keyboard {
+    padding-bottom: 4px;
+    -webkit-highlight: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    text-align: center;
+    display: none;
+}
+.airconsole-keyboard-key {
+    display: inline-block;
+    position: relative;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.airconsole-keyboard-key-label {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    margin: 4px 4px 0px 0px;
+    text-align: center;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.airconsole-keyboard-row {
+    text-align: center;
+    margin-left: 4px;
+    max-width: 640px;
+}
+
+.airconsole-keyboard-layout {
+    display: inline-block;
+    width: 100%;
+}
+
+.airconsole-keyboard-carret {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    left: 1px;
+}
+
+.airconsole-keyboard-carret-container {
+    position: relative;
+}
+
+.airconsole-keyboard-key-html-container {
+    display: inline-block;
+    height: 1em;
+}

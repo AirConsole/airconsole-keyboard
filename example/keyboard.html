@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+    <script type="text/javascript" src="../airconsole-keyboard.js"></script>
+    <link rel="stylesheet" href="../airconsole-keyboard.css">
+    <script type="text/javascript">
+      var keyboard;
+      function init() {
+        keyboard = new AirConsoleKeyboard("my_keyboard");
+        keyboard.bind("textfield1", {
+          onShow: function(input_id) {
+            console.log("onShow#1", input_id);
+          },
+          onChange: function(input_id, text, html) {
+            console.log("onChange#1", input_id, text, html);
+          },
+          onDone: function(input_id, text, html) {
+            console.log("onDone#1", input_id, text, html);
+          },
+          onHide: function(input_id, text, html) {
+            console.log("onHide#1", input_id, text, html);
+          }
+        });
+        keyboard.bind("textfield2");
+      }
+    </script>
+    <style type="text/css">
+      .textfield {
+        display: inline-block;
+        border: 1px solid #888888;
+        width: 200px;
+        padding: 4px;
+        min-height: 18px;
+      }
+
+      .pseudo_button {
+        display: inline-block;
+        background-color: grey;
+        border: 1px solid black;
+        padding: 4px;
+        cursor: hand;
+        cursor: pointer;
+      }
+    </style>
+
+  </head>
+  <body onload="init()">
+    First input field:<br>
+    <div class="textfield" id="textfield1">
+      <div style="color:#aaa"><i>Placeholder</i></div>
+    </div>
+    <div id="my_keyboard"></div>
+    <div class="pseudo_button" onclick="alert(keyboard.valueText('textfield1'))">Alert Value Text</div>
+    <div class="pseudo_button" onclick="alert(keyboard.valueHTML('textfield1'))">Alert Value HTML</div>
+    <div class="pseudo_button" onclick="keyboard.setValue('textfield1', 'you &amp; <b>m</b>e')">Set Value to 'you &amp; <b>m</b>e'</div><br>
+    <br>
+    Second input field:<br>
+    <div class="textfield" id="textfield2"></div>
+    </div>
+  </body>
+</html>
