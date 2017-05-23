@@ -210,24 +210,38 @@ AirConsoleKeyboard.defaultKeyboard = function(done_label, done_class_name) {
   if (done_class_name) {
     done.className = done_class_name
   }
+
+  var backspace = {
+    action: AirConsoleKeyboard.BACKSPACE,
+    label: "&nbsp;",
+    className: "airconsole-keyboard-backspace"
+  };
+
+  var shift_key = {
+    layout: 1,
+    label: "&nbsp;",
+    className: "airconsole-keyboard-shift"
+  };
+  var shift_key_active = {
+    layout: 0,
+    label: "&nbsp;",
+    className: "airconsole-keyboard-layout-key-active airconsole-keyboard-shift"
+  };
+
   return [
     [
       ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
       ["a", "s", "d", "f", "g", "h", "j", "k", "l", "."],
-      [{layout: 1, label: "&#x21E7;"},  "z", "x", "c", "v", "b", "n", "m",
-        {action: AirConsoleKeyboard.BACKSPACE, label: "&#x21E6;"},
-        {action: AirConsoleKeyboard.BACKSPACE, label: "&#x21E6;"}],
+      [shift_key, "z", "x", "c", "v", "b", "n", "m",
+        backspace, backspace],
       [{action: AirConsoleKeyboard.HIDE, label: "Hide"},
         "&nbsp;", "&nbsp;", {layout: 2, label: "#123"},
         done]
     ], [
       ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
       ["A", "S", "D", "F", "G", "H", "J", "K", "L", ","],
-      [{layout: 0, label: "&#x21E7;",
-        className: "airconsole-keyboard-layout-key-active"},
-        "Z", "X", "C", "V", "B", "N", "M",
-        {action: AirConsoleKeyboard.BACKSPACE, label: "&#x21E6;"},
-        {action: AirConsoleKeyboard.BACKSPACE, label: "&#x21E6;"}],
+      [shift_key_active, "Z", "X", "C", "V", "B", "N", "M",
+        backspace, backspace],
       [{action: AirConsoleKeyboard.HIDE, label: "Hide"},
         "&nbsp;", "&nbsp;", {layout: 2, label: "#123"}, done]
     ], [
