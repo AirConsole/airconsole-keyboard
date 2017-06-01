@@ -20,14 +20,14 @@
 }
 
 .airconsole-keyboard-key-label-active {
-    background-color: #5577ff;
+    background-color: #2669a6;
     position: relative;
     top: 3px;
     border-bottom: 0 solid rgba(0,0,0,0);
 }
 
 .airconsole-keyboard-layout-key-active {
-    background-color: #5577ff;
+    background-color: #2669a6;
 }
 
 .airconsole-keyboard-carret {
