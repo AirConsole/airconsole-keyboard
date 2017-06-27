@@ -9,6 +9,7 @@ function AirConsoleKeyboard(keyboard_id, opts) {
   me.container.className += " airconsole-keyboard";
   me.container.addEventListener("click", function(event) {
     event.stopPropagation();
+    event.preventDefault();
   });
 
   document.body.addEventListener("click", function() {
@@ -407,6 +408,7 @@ AirConsoleKeyboard.prototype.createKey_ = function(key, percent_width) {
         me.onKey_(key, key_label)
       }
       e.stopPropagation();
+      e.preventDefault();
     });
   }
   if (key.action !== undefined) {
@@ -419,6 +421,7 @@ AirConsoleKeyboard.prototype.createKey_ = function(key, percent_width) {
             me.setValue(me.active_input_id, "")
           }, 500);
         }
+        e.preventDefault();
       });
     }
 
@@ -434,6 +437,7 @@ AirConsoleKeyboard.prototype.createKey_ = function(key, percent_width) {
         }, key.action == AirConsoleKeyboard.BACKSPACE ? 0 : 100);
       }
       e.stopPropagation();
+      e.preventDefault();
     });
   }
   if (key.layout !== undefined) {
@@ -443,19 +447,24 @@ AirConsoleKeyboard.prototype.createKey_ = function(key, percent_width) {
         me.switchLayout(key.layout)
       }
       e.stopPropagation();
+      e.preventDefault();
     });
   }
   key_container.addEventListener(event_name_down_prevent, function(e) {
     e.stopPropagation();
+    e.preventDefault();
   });
   key_container.addEventListener(event_name_up_prevent, function(e) {
     e.stopPropagation();
+    e.preventDefault();
   });
   key_container.addEventListener("click", function(e) {
     e.stopPropagation();
+    e.preventDefault();
   });
   key_container.addEventListener("dblclick", function(e) {
     e.stopPropagation();
+    e.preventDefault();
   });
   key_container.appendChild(key_label);
   key_container.style.width = percent_width + "%";
