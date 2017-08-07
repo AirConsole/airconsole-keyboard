@@ -63,6 +63,7 @@ AirConsoleKeyboard.prototype.bind = function(input_id, opts) {
   input_div.addEventListener("click", function(event) {
     me.show(input_id, opts);
     event.stopPropagation();
+    event.preventDefault();
   });
   if (!input_div.innerHTML) {
     input_div.innerHTML = "&nbsp;"
