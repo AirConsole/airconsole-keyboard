@@ -12,9 +12,11 @@ function AirConsoleKeyboard(keyboard_id, opts) {
     event.preventDefault();
   });
 
-  document.body.addEventListener("click", function() {
-    me.hide();
-  });
+  if (!opts.prevent_body_click) {
+    document.body.addEventListener("click", function() {
+      me.hide();
+    }, false);
+  }
 
   me.layouts = [];
   me.keys = [];
@@ -145,7 +147,14 @@ AirConsoleKeyboard.prototype.show = function(input_id, opts) {
   if (opts.onShow) {
     opts.onShow(input_id);
   }
-}
+};
+
+AirConsoleKeyboard.prototype.softHide = function() {
+  this.container.style.display = "none";
+  this.removeCarret_();
+  this.active_input_id = undefined;
+  this.active_input_div = undefined;
+};
 
 AirConsoleKeyboard.prototype.hide = function() {
   if (!this.active_input_id) {
