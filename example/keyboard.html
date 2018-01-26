@@ -13,12 +13,17 @@
           },
           onChange: function(input_id, text, html) {
             console.log("onChange#1", input_id, text, html);
+            document.getElementById('charCount1').textContent = text.length;
           },
           onDone: function(input_id, text, html) {
             console.log("onDone#1", input_id, text, html);
           },
           onHide: function(input_id, text, html) {
             console.log("onHide#1", input_id, text, html);
+          },
+          onMaxLength: function(input_id, text, html) {
+            console.log("onMaxLength#1", input_id, text, html);
+            alert("Max length hit! No more input will be accepted.")
           }
         });
         keyboard.bind("textfield2");
@@ -52,7 +57,12 @@
     <div id="my_keyboard"></div>
     <div class="pseudo_button" onclick="alert(keyboard.valueText('textfield1'))">Alert Value Text</div>
     <div class="pseudo_button" onclick="alert(keyboard.valueHTML('textfield1'))">Alert Value HTML</div>
-    <div class="pseudo_button" onclick="keyboard.setValue('textfield1', 'you &amp; <b>m</b>e')">Set Value to 'you &amp; <b>m</b>e'</div><br>
+    <div class="pseudo_button" onclick="keyboard.setValue('textfield1', 'you &amp; <b>m</b>e')">Set Value to 'you &amp; <b>m</b>e'</div>
+    <div class="pseudo_button" onclick="keyboard.setMaxLength('textfield1', '0')">Set MaxLength 0 (off)</div>
+    <div class="pseudo_button" onclick="keyboard.setMaxLength('textfield1', '10')">Set MaxLength 10</div>
+    <div class="pseudo_button" onclick="keyboard.setMaxLength('textfield1', '25')">Set MaxLength 25</div>
+    <div class="pseudo_button" onclick="alert(keyboard.getMaxLength('textfield1'))">Get Maxlength</div><br>
+    Curr Char Count: <span id="charCount1">0</span>
     <br>
     Second input field:<br>
     <div class="textfield" id="textfield2"></div>
