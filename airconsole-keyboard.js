@@ -51,6 +51,8 @@ function AirConsoleKeyboard(keyboard_id, opts) {
     var carret = document.createElement("div");
     carret.className = "airconsole-keyboard-carret";
     me.carret.appendChild(carret);
+    
+
   }
 }
 
@@ -69,6 +71,9 @@ AirConsoleKeyboard.prototype.bind = function(input_id, opts) {
   });
   if (!input_div.innerHTML) {
     input_div.innerHTML = "&nbsp;"
+  }
+  if (!input_div.maxLength) {
+    input_div.maxLength = 0;
   }
   input_div.style.mozUserSelect = "none";
   input_div.style.webkitUserSelect = "none";
@@ -305,6 +310,28 @@ AirConsoleKeyboard.defaultKeyboard = function(done_label, done_class_name) {
 
 AirConsoleKeyboard.DEFAULT_KEYBOARD = AirConsoleKeyboard.defaultKeyboard();
 
+/* start max length */
+/* 
+   maxLength, 0 = no limit
+     > 0 then limit is set and onMaxLength is triggered
+     Note 1: only triggered when trying to go over max 
+     IE: if max = 40, 40 char entered, onMaxLength is triggered at 41 (41th character is ignored)
+     Note 2: max length ignored when using setValue function. Only used for onKey_ (user inputs a key)
+*/
+
+AirConsoleKeyboard.prototype.setMaxLength = function(input_id, maxLength) {
+    var input_div = document.getElementById(input_id);
+    input_div.maxLength = maxLength; // no error checking, so use wisely
+};
+
+AirConsoleKeyboard.prototype.getMaxLength = function(input_id) {
+    var input_div = document.getElementById(input_id);
+    return input_div.maxLength;
+};
+
+/* end max length */
+
+
 
 /* Only private functions bellow */
 
@@ -533,6 +560,7 @@ AirConsoleKeyboard.prototype.onAction_ = function(action, element) {
 
 AirConsoleKeyboard.prototype.addKey_ = function(input_id, insert_pos, html) {
   var me = this;
+
   me.values[input_id].splice(insert_pos, 0, html);
   var span = document.createElement("span");
   span.innerHTML = html;
@@ -572,6 +600,17 @@ AirConsoleKeyboard.prototype.addKey_ = function(input_id, insert_pos, html) {
 
 AirConsoleKeyboard.prototype.onKey_ = function(key, element) {
   var me = this;
+
+  // start maxLength
+  var currMaxLength = me.getMaxLength(this.active_input_id);
+  var currCharCount = me.values[this.active_input_id].length;
+  if(currMaxLength > 0 && currCharCount >= currMaxLength) {
+    // at max and cannot type in anymore
+    me.onMaxLength_();
+    return;
+  }
+  // end maxLength
+   
   element.className += " airconsole-keyboard-key-label-active";
   window.setTimeout(function () {
     element.className = element.className.replace(
@@ -588,4 +627,12 @@ AirConsoleKeyboard.prototype.onChange_ = function() {
                               this.valueText(this.active_input_id),
                               this.valueHTML(this.active_input_id));
   }
-}
+};
+  
+AirConsoleKeyboard.prototype.onMaxLength_ = function() {
+  if (this.active_opts.onMaxLength) {
+    this.active_opts.onMaxLength(this.active_input_id,
+                              this.valueText(this.active_input_id),
+                              this.valueHTML(this.active_input_id));
+  }
+};
