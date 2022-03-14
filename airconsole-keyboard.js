@@ -572,6 +572,15 @@ AirConsoleKeyboard.prototype.addKey_ = function(input_id, insert_pos, html) {
 
 AirConsoleKeyboard.prototype.onKey_ = function(key, element) {
   var me = this;
+
+  if (this.active_input_div) {
+    var max_len = this.active_input_div.getAttribute("data-max-len");
+    if (max_len &&
+          (this.values[this.active_input_id].length >= parseInt(max_len, 10))) {
+      return;
+    }
+  }
+
   element.className += " airconsole-keyboard-key-label-active";
   window.setTimeout(function () {
     element.className = element.className.replace(
